@@ -1,0 +1,202 @@
+#include "Memory.hpp"
+
+using namespace std;
+using namespace boost;
+
+inline bool operator==(const mem_req& lhs, const mem_req& rhs)
+{
+    if((lhs.m_lane_id == rhs.m_lane_id) &&
+            (lhs.m_thread_id == rhs.m_thread_id) &&
+            (lhs.m_type == rhs.m_type)&&
+            (lhs.m_addr == rhs.m_addr))
+        return true;
+    return false;
+}
+
+
+void
+Memory::push_mem_req(std::tuple<uint32_t, Addr, bool> req)
+{
+    this->in_queue.push(req);
+}
+
+std::tuple<uint32_t, Addr, MemCycle, bool>
+Memory::pop_mem_req()
+{
+    std::tuple<uint32_t, Addr, MemCycle, bool> temp_req = this->out_queue.front();
+    this->out_queue.pop();
+    return temp_req;
+}
+
+/** Return values:
+ *  0 - my list is full
+ *  1 - repetative request
+ *  2 - request exist in MSHR from other lane
+ *  3 - New request
+ */
+uint32_t
+Memory::new_mem_req(mem_req req, uint32_t lane_size)
+{
+    if(m_mshr.at(req.m_lane_id).size() == MSHR_ENTRY_LIMIT)
+        return 0;
+    if(search_req(req))
+        return 1;
+    if(search_mshr_req(req)){
+        //Remove one entry from mshr free list and add it 
+        //to the mshr
+        this->m_mshr_free_list.at(req.m_lane_id).pop_back();
+        this->m_mshr.at(req.m_lane_id).push_back(req);
+        return 2;
+    }
+    else{
+        //Remove one entry from mshr free list and add it
+        //to the mshr and send request to Ruby
+        this->m_mshr_free_list.at(req.m_lane_id).pop_back();
+        this->m_mshr.at(req.m_lane_id).push_back(req);
+        //bool isWrite = false;
+        // Core ID should be always zero
+        //
+        //
+        // FIXME Uncomment lines to start using RUBY
+        //m_ruby->send_request(req.m_addr, RUBY_LINE_SIZE, req.m_lane_id, 0, isWrite, false, NULL);
+        //m_ruby->send_request(req.m_addr, RUBY_LINE_SIZE, 0, 0, req.is_write, false, NULL);
+        return 3;
+    }
+    return -1;
+}
+
+void
+Memory::access()
+{
+    //std::queue fail_req;
+    std::queue<std::tuple<uint32_t, Addr, bool>> fail_req;
+    //for(auto& in_req: in_list){
+    //
+    //FIXME Uncomment below line to activate RUBY
+    //while(!in_queue.empty()){
+    while(true){
+        auto& in_req = in_queue.front();
+        uint32_t t_lid;
+        Addr t_addr;
+        bool t_is_write;
+        std::tie(t_lid, t_addr, t_is_write) = in_req;
+
+
+        //FIXME Uncomment below line to activate RUBY
+        //if(this->m_ruby->isReady(t_addr, RUBY_LINE_SIZE, t_lid, 0 , false, false, NULL)){
+        //if(this->m_ruby->isReady(t_addr, RUBY_LINE_SIZE, 0, 0 , t_is_write, false, NULL)){
+        if(true){
+            //Forming a memory request
+            mem_req new_req(t_lid, t_addr, t_is_write);
+            int result = new_mem_req(new_req, RUBY_LINE_SIZE);
+            if(result == 0){
+                fail_req.push(in_req);
+                in_queue.pop();
+            }
+            else
+                in_queue.pop();
+            assert(result != -1 && "Error in MSHR");
+        }
+        else{
+            fail_req.push(in_req);
+            in_queue.pop();
+        }
+    }
+
+    while(!fail_req.empty()){
+        in_queue.push(fail_req.front());
+        fail_req.pop();
+    }
+}
+
+
+bool
+Memory::search_req(mem_req req)
+{
+    uint32_t m_lid = req.m_lane_id;
+    auto mshr_entry = m_mshr.at(m_lid);
+    for(auto& e: mshr_entry){
+        if (e == req){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool
+Memory::search_mshr_req(mem_req req)
+{
+    for(auto& m: m_mshr){
+        for(auto& e: m){
+            if(e == req)
+                return true;
+        }
+    }
+    return false;
+}
+
+void
+Memory::run_a_cycle_lanes()
+{
+    for(uint32_t i = 0; i < num_lanes; ++i){
+        //TODO Check lane's id
+        process_mshr(i);
+    }
+}
+
+void
+Memory::process_mshr(uint32_t lane_id)
+{
+    //FIXME Uncomment below line to use RUBY
+    //while(!m_ruby->RubyQueueEmpty(0)){
+    while(true){
+        DBGMSG(std::cout,"Ruby enter");
+        //FIXME Uncomment below line to use RUBY
+        Addr n_addr = 10;
+        //Addr n_addr = m_ruby->RubyQueueTop(lane_id);
+        for(auto& m : m_mshr){
+            std::vector<uint32_t> entry_remove;
+            uint32_t i = 0;
+            for(auto& req : m){
+                if(req.m_addr == n_addr){
+                    entry_remove.emplace(entry_remove.begin(),i++);
+                    mem_req temp_mem;
+                    m_mshr_free_list.at(req.m_lane_id).push_back(temp_mem);
+                    //TODO Add a new cycle for MEM_LD
+                    //What should be the new cycle?
+                    //FIXME instead of false put is_write_enable
+                    auto out_mem = std::make_tuple(req.m_lane_id, req.m_addr,1,false);
+                    out_queue.push(out_mem);
+                }
+            }
+            for(auto& index : entry_remove){
+                auto temp_it = m.begin();
+                std::advance(temp_it, index);
+                m.erase(temp_it);
+            }
+        }
+        //m_ruby->RubyQueuePop(lane_id);
+        //FIXME Uncomment below line to use RUBY
+        //m_ruby->RubyQueuePop(0);
+    }
+}
+
+void
+Memory::run_a_cycle()
+{
+    this->access();
+    this->run_a_cycle_lanes();
+    //FIXME Uncomment below line to activate RUBY
+    //this->m_ruby->advance_time();
+    m_cycle++;
+}
+
+
+/**
+ * Set ruby's pointer
+ */
+void
+Memory::set_ruby(O3sim_ruby* macsim_ruby)
+{
+    this->m_ruby = macsim_ruby;
+}
