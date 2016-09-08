@@ -7,9 +7,9 @@ set(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION}")
 set(PACKAGE_BUGREPORT "amiralis@sfu.ca")
 
 #TODO UPDATE PRJECT_PATH
-set(PROJECT_PATH /home/amiralis/git/ChainSaw)
+set(PROJECT_PATH /home/amiralis/git/ChainSaw-Sim)
 set(MACASIM_PATH /home/amiralis/git/mem-axc-64/macsim-mem-axc-64/)
-set(RUBY_PATH /home/amiralis/git/mem-axc-64/macsim.r.d.b.s/macsim-mem-axc-64/gems-lib-ooo/ruby_clean/amd64-linux/generated/MESI_CMP_directory_m/)
+set(RUBY_PATH ${CMAKE_SOURCE_DIR}/gems-lib/ruby_clean/amd64-linux/generated/MESI_CMP_directory_m/)
 
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -31,6 +31,13 @@ else()
     message( FATAL_ERROR "ChainSaw needs Boost 1.55 or higher, CMake will exit.")
 endif()
 
+# 3rdparty Libraries
+include(CMakeLists-ExternalProjects.txt)
+
+#ExternalProject_Add(ruby_sim
+    #BUILD_COMMAND make -C gems-lib/ruby_clean PROTOCOL=MESI_CMP_directory_m  NOTESTER=1 DEBUG=0 -j 8 )
+
+#add_custom_command(OUTPUT make-knob  COMMAND make -C knobs/  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}  )
 #Adding macsim
 #include_directories(${MACASIM_PATH}/include)
 #link_directories(${MACASIM_PATH}/lib)
