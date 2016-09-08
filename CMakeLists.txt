@@ -36,7 +36,8 @@ endif()
 #link_directories(${MACASIM_PATH}/lib)
 
 #Adding ruby
-include_directories(/home/amiralis/git/mem-axc-64/macsim.r.d.b.s/macsim-mem-axc-64/gems-lib-ooo/ruby_clean/O3sim_ruby)
+include_directories(../gems-lib/ruby_clean/O3sim_ruby)
+#include_directories(/home/amiralis/git/mem-axc-64/macsim.r.d.b.s/macsim-mem-axc-64/gems-lib-ooo/ruby_clean/O3sim_ruby)
 link_directories(${RUBY_PATH}/lib)
 
 # Add the project header and library paths
