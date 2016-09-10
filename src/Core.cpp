@@ -517,13 +517,18 @@ Core::read_memcsv(std::ifstream& file)
     std::istream instream(&inbuf);
 
 
-  regex mem_parse("^([[:digit:]]+),([^,]*),([[:digit:]]+),([[:digit:]]+).*$");
-  smatch match;
+  //regex mem_parse("^([[:digit:]]+),([^,]*),([[:digit:]]+),([[:digit:]]+).*$");
+  
+  std::vector<std::string> match;
+  boost::char_separator<char> sep(",");
 
   std::string line;
   //for( string line; getline(file, line); ){
   while(std::getline(instream, line)){
-      regex_search(line, match, mem_parse);
+      //regex_search(line, match, mem_parse);
+      boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
+      for(const auto t : tokens)
+          match.push_back(t);
 
       uint64_t iter;
       uint64_t nodeid;

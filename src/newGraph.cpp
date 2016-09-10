@@ -17,7 +17,7 @@ static std::vector<std::string> brewer_color {"#a6cee3","#1f78b4","#b2df8a","#33
  * Retrun mapping for each vertex to its
  * corresponding chunk
  */
-inline std::map<uint64_t, uint64_t> 
+std::map<uint64_t, uint64_t> 
 vertexToChainMap(const std::vector<std::vector<uint64_t>> chains)
 {
     //First we create a map from vertex to the chunk ID
@@ -36,7 +36,7 @@ vertexToChainMap(const std::vector<std::vector<uint64_t>> chains)
 /**
  * Returning list of unique dependencies for each chains
  */
-inline std::map<uint32_t, std::set<uint32_t>>
+std::map<uint32_t, std::set<uint32_t>>
 uniqueDependency(std::map<uint32_t, std::vector<uint32_t> > histodependency)
 {
     std::map<uint32_t, std::set<uint32_t>> un_depen;
@@ -84,7 +84,7 @@ newGraph::reverseMapping(std::map<uint32_t, std::vector<uint32_t> > dependency)
 /**
  * Getting decomposed graph as an input and return depenencies
  */
-inline std::vector<chainDependency>
+std::vector<chainDependency>
 dependenciesGenerate(const BoostGraph& BG, std::vector<std::vector<uint64_t>>& chains, const std::map<uint64_t, uint64_t> chainsMap)
 {
     std::vector<chainDependency> dependencies;
@@ -117,7 +117,7 @@ dependenciesGenerate(const BoostGraph& BG, std::vector<std::vector<uint64_t>>& c
 /**
  * Returning list of dependencies for each chains
  */
-inline std::map<uint32_t, std::vector<uint32_t>>
+std::map<uint32_t, std::vector<uint32_t>>
 histoDependency(vector<chainDependency> dependencies)
 {
     std::map<uint32_t, std::vector<uint32_t>> map_dependency;
@@ -131,7 +131,7 @@ histoDependency(vector<chainDependency> dependencies)
 /**
  * Check whether the decomposed graph has loop or not
  */
-inline bool
+bool
 checkLoopComplete(uint32_t id, map<uint32_t, set<uint32_t>>& dependencies, list<uint32_t>& stack)
 {
 
@@ -162,7 +162,7 @@ checkLoopComplete(uint32_t id, map<uint32_t, set<uint32_t>>& dependencies, list<
 /**
  * Checking do the chains have specific chain with more than 2 live-outs?
  */
-inline bool
+bool
 newGraph::checkLiveOutHelper(std::map<uint32_t, std::vector<uint32_t>>& m_live_out)
 {
     for(auto& ch : m_live_out){
@@ -176,7 +176,7 @@ newGraph::checkLiveOutHelper(std::map<uint32_t, std::vector<uint32_t>>& m_live_o
 /**
  * Checking do the chains have specific chain with more than 2 live-outs?
  */
-inline bool
+bool
 newGraph::checkLiveInHelper(std::map<uint32_t, std::vector<uint32_t>>& m_live_in)
 {
     for(auto& ch : m_live_in){
@@ -191,7 +191,7 @@ newGraph::checkLiveInHelper(std::map<uint32_t, std::vector<uint32_t>>& m_live_in
 /**
  * Computes chains' level
  */
-inline void
+void
 findChainsLevel(int32_t m_level, uint32_t id, map<uint32_t, set<uint32_t>>& dependencies,
                 vector<chainGraph>& ch_graph)
 {
@@ -224,7 +224,7 @@ findChainsLevel(int32_t m_level, uint32_t id, map<uint32_t, set<uint32_t>>& depe
 /**
  * Breaking chains at every live-outs helper
  */
-inline bool
+bool
 breakOutHelper(std::vector<std::vector<uint64_t>>& m_chain,
         const std::vector<chainDependency>& m_depen, const BoostGraph& orig_graph)
 {
@@ -259,7 +259,7 @@ breakOutHelper(std::vector<std::vector<uint64_t>>& m_chain,
  * Explointing maximum available ILP
  * between chains (Breaking at live-in)
  */
-inline bool 
+bool 
 breakInHelper(std::vector<std::vector<uint64_t>>& m_chain, const std::vector<chainDependency>& m_depen, BoostGraph& orig_graph)
 {
     for(auto& dep : m_depen){
