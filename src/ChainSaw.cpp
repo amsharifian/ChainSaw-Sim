@@ -217,6 +217,8 @@ main(int argc, char* argv[]){
                 flag_empty = true;
             }
 
+            cout << "START!!!!!" << endl;
+
             ////Start acc
             ////if it's chunk begin read one line from ACC file
             //////////////

@@ -519,13 +519,11 @@ Core::read_memcsv(std::ifstream& file)
 
   //regex mem_parse("^([[:digit:]]+),([^,]*),([[:digit:]]+),([[:digit:]]+).*$");
   
-  std::vector<std::string> match;
   boost::char_separator<char> sep(",");
 
   std::string line;
-  //for( string line; getline(file, line); ){
   while(std::getline(instream, line)){
-      //regex_search(line, match, mem_parse);
+      std::vector<std::string> match;
       boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
       for(const auto t : tokens)
           match.push_back(t);
@@ -536,14 +534,14 @@ Core::read_memcsv(std::ifstream& file)
       bool isWrite =false;
       uint64_t addr;
 
-      iter = stoi(match[1]);
-      opcode = match[2];
-      nodeid = stoi(match[3]);
+      iter = stoi(match[0]);
+      opcode = match[1];
+      nodeid = stoi(match[2]);
       if(opcode == "Store")
           isWrite = true;
       else
           isWrite = false;
-      addr = stoll(match[4]);
+      addr = stoll(match[3]);
 
       //FIXME
       m_memory.fill_global_memaddr_map( iter, nodeid , MemValue {isWrite,addr});
@@ -712,7 +710,7 @@ Core::memoryInitialize(){
 
     //Load memory map file
     std::ifstream ldstfile(mem_map_path.c_str(), std::ios_base::in | std::ios_base::binary);
-    //assert(ldstfile.is_open() && "COULDNT OPEN MEMORY MAPP FILE");
+    assert(ldstfile.is_open() && "COULDNT OPEN MEMORY MAPP FILE");
     //std::cerr<<"ldst: "<<mem_map_path.c_str()<<std::endl;
     read_memcsv(ldstfile);
     
@@ -727,8 +725,6 @@ Core::finishCore()
     for(auto& l : m_lanes){
         total_mem_stall += l.m_memory_stall;
         total_core_stall += l.m_stall;
-        //l.printLaneStatus();
-        //    
     }
     cout << "TOTAL MEM  STALL: \t" << total_mem_stall  << endl;
     cout << "TOTAL CORE STALL: \t" << total_core_stall << endl;
