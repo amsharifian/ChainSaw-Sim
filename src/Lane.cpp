@@ -191,7 +191,6 @@ Lane::execute()
                             setExeCounter(lane_param.param_set.find("L3_MISS_LATENCY")->second);
                             break;
                         case 3:
-                            //TODO get real address!!
                             this->mem_req_queue.push(std::make_tuple(this->laneID, temp_ins.old_id));
                             setExeCounter(-1);
                             break;
@@ -215,7 +214,6 @@ Lane::execute()
                             setExeCounter(lane_param.param_set.find("L3_MISS_LATENCY")->second);
                             break;
                        case 3:
-                            //TODO get real address!!
                             this->mem_req_queue.push(std::make_tuple(this->laneID, temp_ins.old_id));
                             setExeCounter(-1);
                             break;
@@ -224,7 +222,6 @@ Lane::execute()
                 else{
                     //FIXME FIND OUT ISSUE WITH NOP !!!!!
                     if(temp_ins.type == "Nop"){
-                        //cout << "AMIRLAI" << endl;
                         setExeCounter(2);
                     }
                     setExeCounter(temp_ins.latency);
@@ -270,7 +267,6 @@ Lane::run()
     execute();
     //decode();
     fetch();
-    //profile_update();
 }
 
 

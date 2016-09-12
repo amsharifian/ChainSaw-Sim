@@ -41,7 +41,6 @@ class Lane
         static std::queue<std::tuple<uint32_t, uint32_t>> mem_req_queue;
 
         //Profile information
-        //TODO should be added to profile
         std::vector<uint32_t> schChainsList;
 
         //Set parameter paths

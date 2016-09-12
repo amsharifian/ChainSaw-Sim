@@ -319,6 +319,9 @@ main(int argc, char* argv[]){
     testCore.finishCore();
     cout << "*********************" << endl;
 
+    // Free RUBY object
+    delete m_ruby;
+
     return 0;
 }
 

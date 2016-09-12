@@ -321,7 +321,6 @@ Core::run_one_cycle_core()
         l.run();
     }
 
-    //TODO run memory system one cycle
     //XXX uncomment if it's not stand alone
     m_memory.m_ruby->advance_time();
 }

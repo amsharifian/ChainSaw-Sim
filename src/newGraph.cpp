@@ -829,10 +829,6 @@ newGraph::buildChainGraph()
         if(it_fan_out != un_dependencies.end() && !it_fan_out->second.empty())
             temp_node.live_out = it_fan_out->second.size();
 
-        //Calculate number of different instructions
-        //TODO: need to read instruction format from LLVM and import them!
-        //
-        
         temp_node.nodes = ch;
 
         //Check whether chains is MEM
@@ -1685,12 +1681,6 @@ newGraph::printGraphstats(std::string str_name)
     file.open(f.str());
     assert(file.is_open() && "Graph histo output file couldn't create");
 
-    //TODO fix header
-    //Writing CSV header
-    //std::adjacent_difference(llvm_ins.instruction_llvm.begin(), llvm_ins.instruction_llvm.end(), ostream_iterator<std::string>(res),
-            //[&res](std::string a, std::string b)->std::string {return res << ", ", a; });
-    //res << endl;
-    //
     for(auto& c: llvm_ins.instruction_llvm)
         res << c.first << ", " ;
     res << "\b\b" << " " << endl;
