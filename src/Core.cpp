@@ -355,7 +355,6 @@ Core::send_memory_req()
 void
 Core::update_mem_exe()
 {
-    //FIXME
     //Wakeup the lanes
     //
     //
@@ -512,40 +511,38 @@ Core::read_memcsv(std::ifstream& file)
     boost::iostreams::filtering_streambuf<boost::iostreams::input> inbuf;
     inbuf.push(boost::iostreams::gzip_decompressor());
     inbuf.push(file);
-
+    
     //Convert streambuf to istream
     std::istream instream(&inbuf);
 
+    boost::char_separator<char> sep(",");
 
-  //regex mem_parse("^([[:digit:]]+),([^,]*),([[:digit:]]+),([[:digit:]]+).*$");
-  
-  boost::char_separator<char> sep(",");
+    std::string line;
+    while(std::getline(instream, line)){
+        std::vector<std::string> match;
+        boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
+        for(const auto t : tokens)
+            match.push_back(t);
+        
+        assert(match.size() == 4 && "\nAccelerator input file is in wrong format");
 
-  std::string line;
-  while(std::getline(instream, line)){
-      std::vector<std::string> match;
-      boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
-      for(const auto t : tokens)
-          match.push_back(t);
-
-      uint64_t iter;
-      uint64_t nodeid;
-      string   opcode;
-      bool isWrite =false;
-      uint64_t addr;
-
-      iter = stoi(match[0]);
-      opcode = match[1];
-      nodeid = stoi(match[2]);
-      if(opcode == "Store")
-          isWrite = true;
-      else
-          isWrite = false;
-      addr = stoll(match[3]);
-
-      //FIXME
-      m_memory.fill_global_memaddr_map( iter, nodeid , MemValue {isWrite,addr});
-  }
+        uint64_t iter;
+        uint64_t nodeid;
+        string   opcode;
+        bool isWrite =false;
+        uint64_t addr;
+        
+        iter = stoi(match[0]);
+        opcode = match[1];
+        nodeid = stoi(match[2]);
+        if(opcode == "Store")
+            isWrite = true;
+        else
+            isWrite = false;
+        addr = stoll(match[3]);
+        
+        m_memory.fill_global_memaddr_map( iter, nodeid , MemValue {isWrite,addr});
+    }
 }
 
 /**
@@ -554,23 +551,19 @@ Core::read_memcsv(std::ifstream& file)
 void
 Core::print_memmap()
 {
-  m_memory.print_global_memaddr_map();
+    m_memory.print_global_memaddr_map();
 }
 
 
 void
 Core::coreSetIter(uint32_t n)
 {
-    num_iter = n;
+    this->num_iter = n;
 }
-
-
 
 bool
 Core::run_a_cycle()
 {
-
-
     ////Increamenting program counter
     //cycle_cnt++;
     

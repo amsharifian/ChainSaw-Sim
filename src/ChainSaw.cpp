@@ -98,8 +98,6 @@ main(int argc, char* argv[]){
         cerr << "Exception of unknown type!\n";
     }
 
-    //ifstream input_file(p.c_str(),ios::in);
-    //assert(input_file.is_open() && "Error! File couldn't open");
 
     // You can choose whether print to stdout or to a log file
     if(m_print_log){
@@ -152,12 +150,6 @@ main(int argc, char* argv[]){
     inbufooo.push(boost::iostreams::gzip_decompressor());
     inbufooo.push(input_file);
 
-    //FIXME Replace regex with tokenizer!
-    //
-    regex chunk_parse("^.*__chunk_begin_$");
-    regex ooo_parse("^([[:digit:]]+),([^,]*).*$");
-    regex mem_parse("^([[:digit:]]+),([^,]*),([[:digit:]]+),([[:digit:]]+).*$");
-
     //Convert streambuf to istream
     std::istream ooostream(&inbufooo);
 
@@ -185,7 +177,16 @@ main(int argc, char* argv[]){
     uint32_t num_chunk_call = 0;
     bool flag_empty = true;
     while(std::getline(ooostream, line)){
-        if(regex_search(line, match, chunk_parse)){
+        std::vector<std::string> match;
+        boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
+        for(const auto t : tokens)
+            match.push_back(t);
+        
+        assert(((match.size() == 4) || (match.size() == 3) || (match.size() == 2))
+                && "\nMem input file is in wrong format");
+
+        //if(regex_search(line, match, chunk_parse)){
+        if(match.size() == 2){
             //Free all the mem requests
             if(!flag_empty){
                 
@@ -217,20 +218,19 @@ main(int argc, char* argv[]){
                 flag_empty = true;
             }
 
-            cout << "START!!!!!" << endl;
 
+            //////////////////////////////////////////////////
             ////Start acc
             ////if it's chunk begin read one line from ACC file
-            //////////////
+            //////////////////////////////////////////////////
             
-            regex_search(line, match, ooo_parse);
+            //regex_search(line, match, ooo_parse);
             
             testCore.buildChains(testCore.m_graph.Chains,
                         testCore.m_graph.vertex_to_Chunk, testCore.m_graph.dependencies, testCore.m_graph.un_dependencies,
                         testCore.m_graph.un_reverse_mapping, testCore.m_graph.chain_to_dependencies, testCore.m_graph.orig_map, testCore.m_graph.comp_graph);
 
-            testCore.coreSetIter(1);
-            testCore.coreSetIter(stol(match[1]));
+            testCore.coreSetIter(stol(match[0]));
 
             testCore.initialize();
 
@@ -249,21 +249,21 @@ main(int argc, char* argv[]){
             //1) Extract request's details
             string opcode;
             bool isWrite = false;
-
             flag_empty = false;
 
-            if(regex_search(line, match, mem_parse)){
-                r_addr = stoll(match[4]);
-                opcode = match[2];
+            //if(regex_search(line, match, mem_parse)){
+            if(match.size() == 4){
+                r_addr = stoll(match[3]);
+                opcode = match[1];
             }
-            else if(regex_search(line, match, ooo_parse)){
+            //else if(regex_search(line, match, ooo_parse)){
+            if(match.size() == 3){
+                r_addr = stoll(match[0]);
+                opcode = match[1];
+            }
 
-                r_addr = stoll(match[1]);
-                opcode = match[2];
-            }
-            //send request to ruby
-            //
-            if((opcode == "Store")||(opcode == "Store8"||(opcode == "Store4")||(opcode == "Store1")))
+            // Send request to ruby
+            if(opcode == "Store")
                 isWrite = true;
             else
                 isWrite = false;
@@ -318,15 +318,6 @@ main(int argc, char* argv[]){
     cout << "ACC   CYCLE:  " << global_cnt - ruby_cycle << endl;
     testCore.finishCore();
     cout << "*********************" << endl;
-
-
-
-
-    //else{
-        //test.initialize(p.c_str(), p.stem().c_str());
-    //}
-
-    
 
     return 0;
 }
