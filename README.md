@@ -33,4 +33,30 @@ For running __Chainsaw__ you need to add these two paths into your `LD_LIBRARY_P
 
     $ make test
 
-    Debuging the code
+If you could pass the test case you will the follwoing message:
+
+    Running tests...
+        Start 1: Test
+        1/1 Test #1: Test .............................   **Passe**    9.27 sec
+
+        100% tests passed, 0 tests failed out of 1
+
+        Total Test time (real) =   9.28 sec
+
+In case you couldn't pass the test case you will get the following message:
+
+    Running tests...
+        Start 1: Test
+        1/1 Test #1: Test .............................***Failed    0.00 sec
+
+        0% tests passed, 1 tests failed out of 1
+
+        Total Test time (real) =   0.01 sec
+
+        The following tests FAILED:
+              1 - Test (Failed)
+              Errors while running CTest
+
+The following file contains error message:
+
+    $ cat <BUILD_DIR>/Testing/Temporary/LastTest.log
