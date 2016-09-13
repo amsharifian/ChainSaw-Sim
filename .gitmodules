@@ -1,0 +1,3 @@
+[submodule "chainer"]
+	path = chainer
+	url = git@github.com:amsharifian/chainer.git
