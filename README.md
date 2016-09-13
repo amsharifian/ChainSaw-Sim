@@ -1,7 +1,7 @@
 Chainsaw-Sim:   A Chain simulator
 ======================
 
-Chainsaw-Sim is a cycle accurate simulator that models the host core, the `Chainsaw` accelerator, and spatial fabrics of parameterizable size.
+Chainsaw-Sim is a cycle accurate simulator that models the host core, the 'Chainsaw' accelerator, and spatial fabrics of parameterizable size.
 
 Dependencies
 ----------------------
@@ -11,11 +11,14 @@ Dependencies
 
 Build
 --------------------
-1- Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `program_option` libraries.
-    * ./bootstrap --show-libraries (showing available boost libraries)
-    * ./bootstrap.sh --prefix=`<PATH_TO_INSTALL>` --with-libraries=filesystem,graph,regex,program_options,system
-    * ./b2 --prefix=`<PATH_TO_INSTALL>` -j`<number>` install
+0- Download boost 1.61 from [here](http://www.boost.org/users/history/version_1_61_0.html)
+    * Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `program_option` libraries.
+        * ./bootstrap --show-libraries (showing available boost libraries)
+        * ./bootstrap.sh --prefix=`<PATH_TO_INSTALL>` --with-libraries=filesystem,graph,regex,program_options,system
+        * ./b2 --prefix=`<PATH_TO_INSTALL>` -j`<number>` install
+
 2- Compile _Simulator_ with CMake options
+
     a. `BOOST_ROOT`=`<boost/dir>`
     b. `CMAKE_BUILD_TYPE` = `Debug/Release`
 
