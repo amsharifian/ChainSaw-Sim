@@ -10,7 +10,7 @@ Chainsaw-Sim is a cycle accurate simulator that models the host core, the 'Chain
 ## Build
 1- **Download boost:** You can download boost library from [here](http://www.boost.org/users/history/version_1_61_0.html)
 
-'If you already have built boost on your system you can skip first step.'
+//If you already have built boost on your system you can skip first step//
 
 Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `program_option` libraries.
 
