@@ -16,7 +16,7 @@ Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `pr
     $ ./bootstrap.sh --prefix=`<PATH_TO_INSTALL>` --with-libraries=filesystem,graph,regex,program_options,system
     $ ./b2 --prefix=`<PATH_TO_INSTALL>` install
 
-2- Compile _Simulator_ with CMake:
+2- **Compile** _Simulator_ with CMake:
 
     $ mkdir build && cd build
     $ cmake ../ -DBOOST_ROOT=/home/amiralis/Tools/boost_1_61_0/ -DCMAKE_BUILD_TYPE=Release
