@@ -66,8 +66,8 @@ _Chainsaw_ in general runs in two different modes:
  There two different memory files which should feed to _Chainsaw_ simulator.
  In the first file each line contains only memory requests whithin the hotpath and also node id inside the data flow graph and iteration id:
 
-    2,Load,10,140683921899632
-    2,Store,14,140683921899608
+    - 2,Load,10,140683921899632
+    - 2,Store,14,140683921899608
 
 The addresses have been saved in decimal format and each node ID **should** match with the node ID inside original dot graph file.
 
