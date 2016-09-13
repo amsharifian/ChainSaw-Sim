@@ -23,4 +23,5 @@ Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `pr
     $ make && make install
 
 3- Test the simulator:
- $ make test
+
+    $ make test
