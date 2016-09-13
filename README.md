@@ -1,5 +1,7 @@
-About Chains simulator
+Chainsaw-Sim:   A Chain simulator
 ======================
+
+Chainsaw-Sim is a cycle accurate simulator that models the host core, the `Chainsaw` accelerator, and spatial fabrics of parameterizable size.
 
 Dependencies
 ----------------------
