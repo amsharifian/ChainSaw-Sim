@@ -59,3 +59,22 @@ In case you couldn't pass the test case you will get the following message:
 The following file contains error message:
 
     $ cat <BUILD_DIR>/Testing/Temporary/LastTest.log
+
+## Usage
+_Chainsaw_ in general runs in two different modes:
+ 1. **Memory Trace Driven:** In this mode _Chainsaw_ directly reads memory from a file, and simulate the Memory subsystem while it's simulating the instructions.
+ There two different memory files which should feed to _Chainsaw_ simulator.
+ In the first file each line contains only memory requests whithin the hotpath and also node id inside the data flow graph and iteration id:
+
+    <ITER_ID>,<Load|Store>,<NODE_ID>,<ADDRESS>
+    .
+    .
+    2,Load,10,140683921899632
+    2,Store,14,140683921899608
+
+The addresses have been saved in decimal format and each node ID **should** match with the node ID inside original dot graph file.
+
+
+## Getting Started
+
+_Chainsaw_ 
