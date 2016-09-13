@@ -74,7 +74,6 @@ _Chainsaw_ in general runs in two different modes:
 
 The second contains program memory requests and also markers indicating begining of the _HotPath_ trace:
     
-    - .
     - 140721745227768,Store,8
     - 140721745227736,Store,8
     - 2,__chunk_begin_
