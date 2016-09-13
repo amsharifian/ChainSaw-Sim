@@ -22,6 +22,6 @@ Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `pr
     $ cmake ../ -DBOOST_ROOT=/home/amiralis/Tools/boost_1_61_0/ -DCMAKE_BUILD_TYPE=Release
     $ make && make install
 
-3- Test the simulator:
+3- **Test** the simulator:
 
     $ make test
