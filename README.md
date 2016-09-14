@@ -119,11 +119,11 @@ _Chainsaw_ in general runs in two different modes:
 
  Running _Chainsaw_ in Memory trace driven mode:
 
-     $ cd build
-     $ make -j install
-     $ ./bin/chainSaw -i <DOT_GRAPH> -a <HOTPATH_TRACE> -m <MEMORY_TRACE>
-     $ Simulation is done.
-     # NOTE: Statics they are written in ouput/ folder.
+        $ cd build
+        $ make -j install
+        $ ./bin/chainSaw -i <DOT_GRAPH> -a <HOTPATH_TRACE> -m <MEMORY_TRACE>
+        $ Simulation is done.
+        # NOTE: Statics they are written in ouput/ folder.
 
 2. **Constant memory mode** In this mode the user has three options to put constant miss-latency delay for all the memory requests:
  
