@@ -8,7 +8,7 @@ Chainsaw-Sim is a cycle accurate simulator that models the host core, the 'Chain
 
 
 ## Build
-1- **Download boost:** You can download boost library from [here](http://www.boost.org/users/history/version_1_61_0.html)
+1. **Download boost:** You can download boost library from [here](http://www.boost.org/users/history/version_1_61_0.html)
 
 **Note: If you already have built boost on your system you can skip first step**
 
@@ -18,13 +18,18 @@ Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `pr
     $ ./bootstrap.sh --prefix=`<PATH_TO_INSTALL>` --with-libraries=filesystem,graph,regex,program_options,system
     $ ./b2 --prefix=`<PATH_TO_INSTALL>` install
 
-2- **Compile:** _Simulator_ with CMake:
+2. Clone the tools from the `Chainsaw-Sim` GitHub repository:
 
-    $ mkdir build && cd build
-    $ cmake ../ -DBOOST_ROOT=/home/amiralis/Tools/boost_1_61_0/ -DCMAKE_BUILD_TYPE=Release
-    $ make && make install
+        $ git clone git@github.com:amsharifian/ChainSaw-Sim.git
 
-3- **Test:** the simulator:
+3. **Compile:** _Simulator_ with CMake:
+
+        $ cd ChainSaw-Sim
+        $ mkdir build && cd build
+        $ cmake ../ -DBOOST_ROOT=/home/amiralis/Tools/boost_1_61_0/ -DCMAKE_BUILD_TYPE=Release
+        $ make && make install
+
+4. **Test:** the simulator:
 
 For running __Chainsaw__ you need to add these two paths into your `LD_LIBRARY_PATH`. 
 
