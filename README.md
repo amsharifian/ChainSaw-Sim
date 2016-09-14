@@ -1,5 +1,5 @@
 # Chainsaw-Sim:   A Chain simulator
-Chainsaw-Sim is a cycle accurate simulator that models the host core, the 'Chainsaw' accelerator, and spatial fabrics of parameterizable size.
+Chainsaw-Sim is a cycle accurate simulator that models the host core, the _Chainsaw_ accelerator, and spatial fabrics of parameterizable size.
 
 ## Dependencies
 * 1- Boost 1.61 (or higher)
