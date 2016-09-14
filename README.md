@@ -129,11 +129,11 @@ _Chainsaw_ in general runs in two different modes:
  
  Running _Chainsaw_ in Memory trace driven mode:
 
-     $ cd build
-     $ make -j install
-     $ ./bin/chainSaw -i <DOT_GRAPH> 
-     $ Simulation is done.
-     # NOTE: Statics they are written in ouput/ folder.
+        $ cd build
+        $ make -j install
+        $ ./bin/chainSaw -i <DOT_GRAPH> 
+        $ Simulation is done.
+        # NOTE: Statics they are written in ouput/ folder.
 
 _These modes can be set in the config files._
 
