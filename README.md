@@ -111,15 +111,21 @@ _Chainsaw_ in general runs in two different modes:
         .
         2,Load,10,140683921899632
         2,Store,14,140683921899608
+        .
+        .
 
  The second contains program memory requests and also markers indicating begining of the _HotPath_ trace:
     
+        .
+        .
         140721745227768,Store,8
         140721745227736,Store,8
         2,__chunk_begin_
         140721745227736,Load,8
         140721745227776,Load,8
         140721745227784,Load,8
+        .
+        .
 
  The addresses have been saved in decimal format and each node ID **should** match with the node ID inside original dot graph file.
 
