@@ -81,7 +81,7 @@ In `def` folder there are three config file which set the simulator's variables:
  
   - `<MEMORY_MODE>`: Choosing core's memory system.
   - `<LANE_SIZE>`: Set how many instructions each lane can support.
-  - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies (LEVEL SCHEDULING | BLOCK SCHEDULING)
+  - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies.
   - `<NUM_LANE>`: Set number of lanes.
 
 
@@ -119,21 +119,21 @@ _Chainsaw_ in general runs in two different modes:
 
  Running _Chainsaw_ in Memory trace driven mode:
 
-    $ cd build
-    $ make -j install
-    $ ./bin/chainSaw -i <DOT_GRAPH> -a <HOTPATH_TRACE> -m <MEMORY_TRACE>
-    $ Simulation is done.
-    # NOTE: Statics they are written in ouput/ folder.
+     $ cd build
+     $ make -j install
+     $ ./bin/chainSaw -i <DOT_GRAPH> -a <HOTPATH_TRACE> -m <MEMORY_TRACE>
+     $ Simulation is done.
+     # NOTE: Statics they are written in ouput/ folder.
 
 2. **Constant memory mode** In this mode the user has three options to put constant miss-latency delay for all the memory requests:
  
  Running _Chainsaw_ in Memory trace driven mode:
 
-    $ cd build
-    $ make -j install
-    $ ./bin/chainSaw -i <DOT_GRAPH> 
-    $ Simulation is done.
-    # NOTE: Statics they are written in ouput/ folder.
+     $ cd build
+     $ make -j install
+     $ ./bin/chainSaw -i <DOT_GRAPH> 
+     $ Simulation is done.
+     # NOTE: Statics they are written in ouput/ folder.
 
 _These modes can be set in the config files._
 
