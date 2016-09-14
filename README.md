@@ -61,17 +61,28 @@ The following file contains error message:
     $ cat <BUILD_DIR>/Testing/Temporary/LastTest.log
 
 ## Usage
-_Chainsaw_ in general runs in two different modes:
- 1. **Memory Trace Driven:** In this mode _Chainsaw_ directly reads memory from a file, and simulate the Memory subsystem while it's simulating the instructions.
- There two different memory files which should feed to _Chainsaw_ simulator.
- In the first file each line contains only memory requests whithin the hotpath and also node id inside the data flow graph and iteration id:
+In folder `def` there are three config file which set the simulator's variables:
 
-    - `<ITER_ID>,<Load|Store>,<NODE_ID>,<ADDRESS>`
+ 1. Core.def:
+    Core.def contains Core's config variables. By setting these vriables you can control the Core's fabric parameters:
+        - `<MEMORY_MODE>`: Choosing core's memory system.
+        - `<LANE_SIZE>`: Set how many instructions each lane can support.
+        - `<FETCH_DELAY>`: Fetch stage's delay.
+        - `<DECODE_DELAY>`: Decode stage's delay.
+        - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies (LEVEL SCHEDULING | BLOCK SCHEDULING)
+
+## Getting Started
+_Chainsaw_ in general runs in two different modes:
+
+1. **Memory Trace Driven:** In this mode _Chainsaw_ directly reads memory from a file, and simulate the Memory subsystem while it's simulating the instructions.
+ There two different memory files which should feed to _Chainsaw_ simulator.
+ In the first file each line contains only memory requests whithin the hotpath and also node id inside the data flow graph and iteration id (Format: `<ITER_ID>,<Load|Store>,<NODE_ID>,<ADDRESS>`).
+
     - .
     - .
     - 2,Load,10,140683921899632
     - 2,Store,14,140683921899608
-
+ 
  The second contains program memory requests and also markers indicating begining of the _HotPath_ trace:
     
     - 140721745227768,Store,8
@@ -91,6 +102,3 @@ _Chainsaw_ in general runs in two different modes:
 
 These modes can be set in the config files.
 
-## Getting Started
-
-_Chainsaw_ 
