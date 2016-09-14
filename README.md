@@ -9,7 +9,8 @@ Chainsaw-Sim is a cycle accurate simulator that models the host core, the 'Chain
 
 ## Build
 1- **Download boost:** You can download boost library from [here](http://www.boost.org/users/history/version_1_61_0.html)
-_Note: If you already have built boost on your system you can skip first step_
+
+**Note: If you already have built boost on your system you can skip first step**
 
 Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `program_option` libraries.
 
@@ -23,7 +24,7 @@ Compile boost with `regex`, `graph`, `system`, `filesystem`, `iostreams` and `pr
     $ cmake ../ -DBOOST_ROOT=/home/amiralis/Tools/boost_1_61_0/ -DCMAKE_BUILD_TYPE=Release
     $ make && make install
 
-3- **Test** the simulator:
+3- **Test:** the simulator:
 
 For running __Chainsaw__ you need to add these two paths into your `LD_LIBRARY_PATH`. 
 
@@ -137,3 +138,12 @@ _Chainsaw_ in general runs in two different modes:
 
 _These modes can be set in the config files._
 
+## Input file
+_Chainsaw_ uses dataflow graph in order to simulate the hot path. The [chainer](git@github.com:amsharifian/chainer.git) project works as a preprocessing step in order to prepare _Chainsaw_ input files. We rely on Git's submodule system to take care of resolving the references. _Chainer_ has been added to the _Chainsaw_ simulator as a submodule in order to fetch the project you need to run:
+
+    $ cd Chainsaw-Sim
+    $ git submodule update --init --recursive
+
+_chainer_ has instructions how to run it on input dot graph files.
+
+## Simulation output
