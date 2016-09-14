@@ -147,3 +147,15 @@ _Chainsaw_ uses dataflow graph in order to simulate the hot path. The [chainer](
 _chainer_ has instructions how to run it on input dot graph files.
 
 ## Simulation output
+In the `output` folder you can find the simulation statics:
+
+ - `<name-chain.dot>`: Chain's graph file.
+ - `<name-chainOpHisto.csv>`: Histogram of instructions in different chains with different size.
+ - `<name-chainSize.csv>`: Histogram of the chain sizes.
+ - `<name-chainStat.csv>`: Final chain's graph stats.
+ - `<name-chILP>`: Chain ILP at each level.
+ - `<name-ilpgraph.dot>`: Loss ILP graph.
+ - `<name-graphHisto.csv>`: Input graph operations histogram.
+ - `<name-graphStat.csv>`: Input graph stats.
+ - `<name-liveInHisto.csv>`: Live-in histogram for chains.
+ - `<name-liveOutHisto.csv>`: Live-out histogram for chains.
