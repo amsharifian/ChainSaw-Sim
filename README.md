@@ -63,15 +63,36 @@ The following file contains error message:
 ## Usage
 In `def` folder there are three config file which set the simulator's variables:
 
- 1. **Core.def**:
+ 1. **Graph.def**:
+
+  Graph.def contains configurations for input graph.
+  
+   - `<MAX_ILP>`: Breaking each chain at every live-in and live-out so that we can get highest available ILP from the chains.
+   - `<MERGE>`: Running `mergeq` algorithm on input graph.
+   - `<FUSE>`: Running memory fusion mode.
+   - `<MAX_NUM_CHAIN>`: Maximum nubmer chains.
+   - `<MAX_LIVE_OUT>`: Maximum number of live-out for each chain.
+   - `<MAX_LIVE_IN>`: Maximum number of live-in for each chain.
+   - `<BLOCK_LIMIT>`: Number of bypass registers.
+
+ 2. **Core.def**:
     
  Core.def contains Core's config variables. By setting these vriables you can control the Core's fabric parameters:
  
   - `<MEMORY_MODE>`: Choosing core's memory system.
   - `<LANE_SIZE>`: Set how many instructions each lane can support.
+  - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies (LEVEL SCHEDULING | BLOCK SCHEDULING)
+  - `<NUM_LANE>`: Set number of lanes.
+
+
+ 3. **Lane.def**
+
+  - `<L1_MISS_LATENCY>`: L1 cache miss latency. 
+  - `<L2_MISS_LATENCY>`: L2 cache miss latency. 
+  - `<L3_MISS_LATENCY>`: L3 cache miss latency. 
   - `<FETCH_DELAY>`: Fetch stage's delay.
   - `<DECODE_DELAY>`: Decode stage's delay.
-  - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies (LEVEL SCHEDULING | BLOCK SCHEDULING)
+
 
 ## Getting Started
 _Chainsaw_ in general runs in two different modes:
@@ -96,11 +117,23 @@ _Chainsaw_ in general runs in two different modes:
 
  The addresses have been saved in decimal format and each node ID **should** match with the node ID inside original dot graph file.
 
+ Running _Chainsaw_ in Memory trace driven mode:
+
+    $ cd build
+    $ make -j install
+    $ ./bin/chainSaw -i <DOT_GRAPH> -a <HOTPATH_TRACE> -m <MEMORY_TRACE>
+    $ Simulation is done.
+    # NOTE: Statics they are written in ouput/ folder.
+
 2. **Constant memory mode** In this mode the user has three options to put constant miss-latency delay for all the memory requests:
+ 
+ Running _Chainsaw_ in Memory trace driven mode:
 
-    - L1 Cash miss latency
-    - L2 Cash miss latency
-    - L3 Cash miss latency
+    $ cd build
+    $ make -j install
+    $ ./bin/chainSaw -i <DOT_GRAPH> 
+    $ Simulation is done.
+    # NOTE: Statics they are written in ouput/ folder.
 
-These modes can be set in the config files.
+_These modes can be set in the config files._
 
