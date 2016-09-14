@@ -61,15 +61,17 @@ The following file contains error message:
     $ cat <BUILD_DIR>/Testing/Temporary/LastTest.log
 
 ## Usage
-In folder `def` there are three config file which set the simulator's variables:
+In `def` folder there are three config file which set the simulator's variables:
 
- 1. Core.def:
-    Core.def contains Core's config variables. By setting these vriables you can control the Core's fabric parameters:
-        - `<MEMORY_MODE>`: Choosing core's memory system.
-        - `<LANE_SIZE>`: Set how many instructions each lane can support.
-        - `<FETCH_DELAY>`: Fetch stage's delay.
-        - `<DECODE_DELAY>`: Decode stage's delay.
-        - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies (LEVEL SCHEDULING | BLOCK SCHEDULING)
+ 1. **Core.def**:
+    
+ Core.def contains Core's config variables. By setting these vriables you can control the Core's fabric parameters:
+ 
+ - `<MEMORY_MODE>`: Choosing core's memory system.
+ - `<LANE_SIZE>`: Set how many instructions each lane can support.
+ - `<FETCH_DELAY>`: Fetch stage's delay.
+ - `<DECODE_DELAY>`: Decode stage's delay.
+ - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies (LEVEL SCHEDULING | BLOCK SCHEDULING)
 
 ## Getting Started
 _Chainsaw_ in general runs in two different modes:
