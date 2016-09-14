@@ -153,9 +153,14 @@ In the `output` folder you can find the simulation statics:
  - `<name-chainOpHisto.csv>`: Histogram of instructions in different chains with different size.
  - `<name-chainSize.csv>`: Histogram of the chain sizes.
  - `<name-chainStat.csv>`: Final chain's graph stats.
- - `<name-chILP>`: Chain ILP at each level.
+ - `<name-chILP.dot>`: Chain ILP at each level.
  - `<name-ilpgraph.dot>`: Loss ILP graph.
  - `<name-graphHisto.csv>`: Input graph operations histogram.
  - `<name-graphStat.csv>`: Input graph stats.
  - `<name-liveInHisto.csv>`: Live-in histogram for chains.
  - `<name-liveOutHisto.csv>`: Live-out histogram for chains.
+
+
+## Contributors
+ - Amirali Sharifian (Simon Fraser University)
+ - Apala Guha (Simon Fraser University)
