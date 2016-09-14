@@ -18,7 +18,7 @@ Chainsaw-Sim is a cycle accurate simulator that models the host core, the _Chain
         $ ./bootstrap.sh --prefix=`<PATH_TO_INSTALL>` --with-libraries=filesystem,graph,regex,program_options,system
         $ ./b2 --prefix=`<PATH_TO_INSTALL>` install
 
-2. Clone the tools from the `Chainsaw-Sim` GitHub repository:
+2. **Clone** the tools from the `Chainsaw-Sim` GitHub repository:
 
         $ git clone git@github.com:amsharifian/ChainSaw-Sim.git
 
