@@ -27,7 +27,7 @@ add_custom_command(
 add_custom_command(
     TARGET chainSaw
     POST_BUILD
-    COMMAND mkdir ${CMAKE_BINARY_DIR}/output
+    COMMAND mkdir -p ${CMAKE_BINARY_DIR}/output
     )
 
 

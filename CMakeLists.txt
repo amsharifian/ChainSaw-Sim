@@ -8,11 +8,9 @@ set(PACKAGE_BUGREPORT "amiralis@sfu.ca")
 
 set(RUBY_PATH ${CMAKE_SOURCE_DIR}/gems-lib/ruby_clean/amd64-linux/generated/MESI_CMP_directory_m/)
 
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -O0 -fpermissive -Wno-write-strings -Wno-unused-label")
+set(CMAKE_CXX_FLAGS "-std=c++11 -O3 -fpermissive -Wno-write-strings -Wno-unused-label")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-set(CMAKE_CXX_COMPILER g++)
 
 # Find and include boost 
 set(Boost_USE_STATIC_LIBS OFF) 
