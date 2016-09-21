@@ -1,1 +1,0 @@
-#include <simics/global.h>

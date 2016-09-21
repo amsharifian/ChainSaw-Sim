@@ -19,7 +19,6 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)  
 set(Boost_USE_STATIC_RUNTIME OFF) 
 find_package(Boost 1.61.0 COMPONENTS graph system filesystem program_options iostreams) 
-#find_package(Boost 1.61.0 COMPONENTS system filesystem program_options ) 
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS}) 
@@ -36,7 +35,7 @@ add_custom_target(
 
 # Adding ruby
 # 3rdparty Libraries
-#include(CMakeLists-ExternalProjects.txt)
+include(CMakeLists-ExternalProjects.txt)
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
