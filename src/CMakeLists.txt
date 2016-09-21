@@ -30,7 +30,6 @@ add_custom_command(
     COMMAND mkdir -p ${CMAKE_BINARY_DIR}/output
     )
 
-
 #Create shared library
 add_library(chainS SHARED ${SOURCES})
 

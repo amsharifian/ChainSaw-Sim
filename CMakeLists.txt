@@ -48,3 +48,8 @@ add_test(
     NAME Test
     COMMAND ${CMAKE_BINARY_DIR}/bin/chainSaw -i ${CMAKE_SOURCE_DIR}/test/179_art_dfg.dot -a ${CMAKE_SOURCE_DIR}/test/axc-dump.out.gz -m ${CMAKE_SOURCE_DIR}/test/ooo-dump.out.gz
     )
+
+
+
+set(CMAKE_INSTALL_RPATH "${RUBY_PATH}/lib")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
