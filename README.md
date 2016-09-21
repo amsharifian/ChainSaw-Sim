@@ -38,7 +38,7 @@ For running __Chainsaw__ you need to add these two paths into your `LD_LIBRARY_P
 
     $ make test
 
-If you could pass the test case you will the follwoing message:
+If you could pass the test case you will the following message:
 
     Running tests...
         Start 1: Test
@@ -76,18 +76,18 @@ In `def` folder there are three config file which set the simulator's variables:
    - `<MAX_ILP>`: Breaking each chain at every live-in and live-out so that we can get highest available ILP from the chains.
    - `<MERGE>`: Running `mergeq` algorithm on input graph.
    - `<FUSE>`: Running memory fusion mode.
-   - `<MAX_NUM_CHAIN>`: Maximum nubmer chains.
+   - `<MAX_NUM_CHAIN>`: Maximum number chains.
    - `<MAX_LIVE_OUT>`: Maximum number of live-out for each chain.
    - `<MAX_LIVE_IN>`: Maximum number of live-in for each chain.
    - `<BLOCK_LIMIT>`: Number of bypass registers.
 
  2. **Core.def**:
     
- Core.def contains Core's config variables. By setting these vriables you can control the Core's fabric parameters:
+ Core.def contains Core's config variables. By setting these variables you can control the Core's fabric parameters:
  
   - `<MEMORY_MODE>`: Choosing core's memory system.
   - `<LANE_SIZE>`: Set how many instructions each lane can support.
-  - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategeies.
+  - `<SCHEDULER>`: _Chainsaw_ supports two different scheduling strategies.
   - `<NUM_LANE>`: Set number of lanes.
 
 
@@ -105,7 +105,7 @@ _Chainsaw_ in general runs in two different modes:
 
 1. **Memory Trace Driven:** In this mode _Chainsaw_ directly reads memory from a file, and simulate the Memory subsystem while it's simulating the instructions.
  There two different memory files which should feed to _Chainsaw_ simulator.
- In the first file each line contains only memory requests whithin the hotpath and also node id inside the data flow graph and iteration id (Format: `<ITER_ID>,<Load|Store>,<NODE_ID>,<ADDRESS>`).
+ In the first file each line contains only memory requests within the hotpath and also node id inside the data flow graph and iteration id (Format: `<ITER_ID>,<Load|Store>,<NODE_ID>,<ADDRESS>`).
 
         .
         .
@@ -114,7 +114,7 @@ _Chainsaw_ in general runs in two different modes:
         .
         .
 
- The second contains program memory requests and also markers indicating begining of the _HotPath_ trace:
+ The second contains program memory requests and also markers indicating beginning of the _HotPath_ trace:
     
         .
         .
@@ -135,7 +135,7 @@ _Chainsaw_ in general runs in two different modes:
         $ make -j install
         $ ./bin/chainSaw -i <DOT_GRAPH> -a <HOTPATH_TRACE> -m <MEMORY_TRACE>
         $ Simulation is done.
-        # NOTE: Statics they are written in ouput/ folder.
+        # NOTE: Statics they are written in output/ folder.
 
 2. **Constant memory mode** In this mode the user has three options to put constant miss-latency delay for all the memory requests:
  
@@ -145,7 +145,7 @@ _Chainsaw_ in general runs in two different modes:
         $ make -j install
         $ ./bin/chainSaw -i <DOT_GRAPH> 
         $ Simulation is done.
-        # NOTE: Statics they are written in ouput/ folder.
+        # NOTE: Statics they are written in output/ folder.
 
 _These modes can be set in the config files._
 
@@ -174,5 +174,3 @@ In the `output` folder you can find the simulation statics:
 
 ## Contributors
  - Amirali Sharifian (Simon Fraser University)
- - Snehasish Kumar (Simon Fraser University)
- - Apala Guha (Simon Fraser University)
