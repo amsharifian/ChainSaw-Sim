@@ -45,6 +45,7 @@
 include $(GEMS_ROOT)/common/Makefile.simics_version
 
 HOST_TYPE := $(shell $(GEMS_ROOT)/scripts/calc_host.sh)
+#HOST_TYPE := amd64-linux
 SIMICS_ROOT := $(GEMS_ROOT)/simics
 SLICC_ROOT := $(GEMS_ROOT)/slicc
 PROTOCOL_ROOT := $(GEMS_ROOT)/protocols
@@ -98,7 +99,7 @@ LFLAGS :=
 CC_VERSION=3.4.4
 
 ifeq ($(HOST_TYPE),amd64-linux)
-  CC =  g++-4.8
+  #CC =  g++-4.8
   #CC =  /usr/bin/g++
   OPT_FLAGS = -m64 -march=barcelona -fPIC -Wno-deprecated
   LDFLAGS += -ggdb -g3 -Wl,-R/s/gcc-3.4.4/lib64 

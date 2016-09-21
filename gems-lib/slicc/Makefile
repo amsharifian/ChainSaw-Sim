@@ -6,6 +6,7 @@
 # GEMS_ROOT points to the base of the CVS tree
 GEMS_ROOT = ..
 HOST_TYPE := $(shell $(GEMS_ROOT)/scripts/calc_host.sh)
+#HOST_TYPE := amd64-linux
 GENERATED_DIR := generated
 VPATH = .:$(GEMS_ROOT)/common:$(GENERATED_DIR):symbols:generator:ast
 
