@@ -9,7 +9,7 @@ add_custom_command(
     TARGET chainSaw
     POST_BUILD
     COMMAND ln -sf ${CMAKE_SOURCE_DIR}/def ${CMAKE_BINARY_DIR}/def
-    COMMENT "=================== Generating soft links ..."
+    COMMENT "=================== Generating soft links ====================="
     )
 
 add_custom_command(
