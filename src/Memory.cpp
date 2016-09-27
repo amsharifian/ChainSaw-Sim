@@ -1,14 +1,7 @@
 #include "Memory.hpp"
 
-//using namespace std;
-
 Memory::Memory(O3sim_ruby* _ruby)
 {
-
-  // m_simBase = simBase;
-  // REPORT("Memory system(%s) has been initialized.\n",
-  //     KNOB(KNOB_MEMORY_TYPE)->getValue().c_str());
-
   m_num_core = 1;
   m_num_l3   = 1;
   m_num_mc   = 1;
@@ -18,9 +11,6 @@ Memory::Memory(O3sim_ruby* _ruby)
 
   this->initialize();
   m_ruby = _ruby;
-
-  // m_ruby = new O3sim_ruby(1, 1,4,1, true, true, 1 ,"","med","/dev/null");
-  // m_ruby->initialize();
 
 }
 
@@ -54,13 +44,6 @@ Memory::~Memory()
 {
   ldst_addr_buffer.clear();
   memaddr_map.clear();
-
-  // std::ofstream ruby_stat_file("ruby.stat.out", ios::out);
-  // m_ruby->print_stats(ruby_stat_file);
-  // ruby_stat_file.close();
-
-  // m_ruby->destroy();
-  // delete m_ruby;
 }
 
 
@@ -70,10 +53,6 @@ void Memory::send_req( uint64_t iter, uint64_t nodeid/*, bool isWrite*/ )
   if (memaddr_map.find(key) != memaddr_map.end())
   {
     MemValue mem_value = memaddr_map[key];
-    //D(cout<<"m_ruby: send_req to ldst_addr_buffer-  mem_value :"<<mem_value.addr<<"\t"
-        //<<"nodeid: "<<nodeid<<"\t"
-        //<<"iter: "<<iter<<"\t"
-        //<<"\n");
     bool isWrite = mem_value.isWrite;
     Addr vaddr = mem_value.addr;
     MemValue_t ldst_value = MemValue_t{isWrite,nodeid,vaddr,false};
@@ -136,7 +115,6 @@ bool Memory::access()
 
 
 // get base line address
-// FIXME (jaekyu, 3-7-2012)
 // replace 63 with the cache line size
 Addr 
 Memory::base_addr(Addr addr)
@@ -169,10 +147,6 @@ Memory::process_mshr()
     const MemValue_t* matching_req = search_req(addr, tmp_line_size);
     assert(matching_req != NULL && "Addr returned from Ruby not found in ldst_addr_buffer");
 
-    //D(std::cout<<"m_ruby: get response: addr "<<addr<<"\t"
-        //<<"nodeid: "<<matching_req->nodeid<<"\t"
-        //<<endl);
-
     m_mem_resp_list.push_back(matching_req->nodeid);
     ldst_addr_buffer.remove(*matching_req);
     m_ruby->RubyQueuePop(m_core_id);
@@ -191,7 +165,7 @@ Memory::search_req(Addr addr, uint64_t size)
   for( auto &mem_value : ldst_addr_buffer)
   {
     Addr vaddr = mem_value.vaddr;
-    //FIXME: vaddr + size => size corresponds to m_mem_size from macsim : in uop.cc 
+    //XXX: vaddr + size => size corresponds to m_mem_size from macsim : in uop.cc 
     //This size actually varies from opcode to opcode. and to set this we need a decoder i.e we need more info
     //than just Load op or store op
     // if(vaddr <= addr && vaddr + size >= addr+size)
@@ -201,19 +175,6 @@ Memory::search_req(Addr addr, uint64_t size)
 
   return NULL;
 }
-
-
-// MemValue_t Memory::check_req(Addr vaddr, Addr addr, int size)
-// {
-//     //FIXME: vaddr + size => size corresponds to m_mem_size from macsim : in uop.cc 
-//     //This size actually varies from opcode to opcode. and to set this we need a decoder i.e we need more info
-//     //than just Load op or store op
-//     if(vaddr <= addr && vaddr + size >= addr+size)
-//       return true;
-//     else 
-//       return false;
-// }
-
 
 void Memory::fill_global_memaddr_map(uint64_t iter, uint64_t nodeid , MemValue mem_value)
 {

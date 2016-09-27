@@ -321,7 +321,6 @@ Core::run_one_cycle_core()
         l.run();
     }
 
-    //TODO run memory system one cycle
     //XXX uncomment if it's not stand alone
     m_memory.m_ruby->advance_time();
 }
@@ -355,7 +354,6 @@ Core::send_memory_req()
 void
 Core::update_mem_exe()
 {
-    //FIXME
     //Wakeup the lanes
     //
     //
@@ -512,37 +510,38 @@ Core::read_memcsv(std::ifstream& file)
     boost::iostreams::filtering_streambuf<boost::iostreams::input> inbuf;
     inbuf.push(boost::iostreams::gzip_decompressor());
     inbuf.push(file);
-
+    
     //Convert streambuf to istream
     std::istream instream(&inbuf);
 
+    boost::char_separator<char> sep(",");
 
-  regex mem_parse("^([[:digit:]]+),([^,]*),([[:digit:]]+),([[:digit:]]+).*$");
-  smatch match;
+    std::string line;
+    while(std::getline(instream, line)){
+        std::vector<std::string> match;
+        boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
+        for(const auto t : tokens)
+            match.push_back(t);
+        
+        assert(match.size() == 4 && "\nAccelerator input file is in wrong format");
 
-  std::string line;
-  //for( string line; getline(file, line); ){
-  while(std::getline(instream, line)){
-      regex_search(line, match, mem_parse);
-
-      uint64_t iter;
-      uint64_t nodeid;
-      string   opcode;
-      bool isWrite =false;
-      uint64_t addr;
-
-      iter = stoi(match[1]);
-      opcode = match[2];
-      nodeid = stoi(match[3]);
-      if(opcode == "Store")
-          isWrite = true;
-      else
-          isWrite = false;
-      addr = stoll(match[4]);
-
-      //FIXME
-      m_memory.fill_global_memaddr_map( iter, nodeid , MemValue {isWrite,addr});
-  }
+        uint64_t iter;
+        uint64_t nodeid;
+        string   opcode;
+        bool isWrite =false;
+        uint64_t addr;
+        
+        iter = stoi(match[0]);
+        opcode = match[1];
+        nodeid = stoi(match[2]);
+        if(opcode == "Store")
+            isWrite = true;
+        else
+            isWrite = false;
+        addr = stoll(match[3]);
+        
+        m_memory.fill_global_memaddr_map( iter, nodeid , MemValue {isWrite,addr});
+    }
 }
 
 /**
@@ -551,23 +550,19 @@ Core::read_memcsv(std::ifstream& file)
 void
 Core::print_memmap()
 {
-  m_memory.print_global_memaddr_map();
+    m_memory.print_global_memaddr_map();
 }
 
 
 void
 Core::coreSetIter(uint32_t n)
 {
-    num_iter = n;
+    this->num_iter = n;
 }
-
-
 
 bool
 Core::run_a_cycle()
 {
-
-
     ////Increamenting program counter
     //cycle_cnt++;
     
@@ -707,7 +702,7 @@ Core::memoryInitialize(){
 
     //Load memory map file
     std::ifstream ldstfile(mem_map_path.c_str(), std::ios_base::in | std::ios_base::binary);
-    //assert(ldstfile.is_open() && "COULDNT OPEN MEMORY MAPP FILE");
+    assert(ldstfile.is_open() && "COULDNT OPEN MEMORY MAPP FILE");
     //std::cerr<<"ldst: "<<mem_map_path.c_str()<<std::endl;
     read_memcsv(ldstfile);
     
@@ -722,8 +717,6 @@ Core::finishCore()
     for(auto& l : m_lanes){
         total_mem_stall += l.m_memory_stall;
         total_core_stall += l.m_stall;
-        //l.printLaneStatus();
-        //    
     }
     cout << "TOTAL MEM  STALL: \t" << total_mem_stall  << endl;
     cout << "TOTAL CORE STALL: \t" << total_core_stall << endl;
