@@ -8,18 +8,20 @@ set(PACKAGE_BUGREPORT "amiralis@sfu.ca")
 
 set(RUBY_PATH ${CMAKE_SOURCE_DIR}/gems-lib/ruby_clean/amd64-linux/generated/MESI_CMP_directory_m/)
 
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -O0 -fpermissive -Wno-write-strings -Wno-unused-label")
+set(CMAKE_CXX_FLAGS "-std=c++11 -O3 -fpermissive -Wno-write-strings -Wno-unused-label")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-set(CMAKE_CXX_COMPILER g++)
 
 # Find and include boost 
 set(Boost_USE_STATIC_LIBS OFF) 
 set(Boost_USE_MULTITHREADED ON)  
 set(Boost_USE_STATIC_RUNTIME OFF) 
+<<<<<<< HEAD
 find_package(Boost 1.55.0 COMPONENTS graph regex system filesystem program_options) 
 #find_package(Boost 1.55.0 COMPONENTS graph regex system filesystem program_options iostreams) 
+=======
+find_package(Boost 1.61.0 COMPONENTS graph system filesystem program_options iostreams) 
+>>>>>>> f5d88589c8aa320f6d6770d4b3dc744e6a41a56a
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS}) 
@@ -51,3 +53,8 @@ add_test(
     NAME Test
     COMMAND ${CMAKE_BINARY_DIR}/bin/chainSaw -i ${CMAKE_SOURCE_DIR}/test/179_art_dfg.dot -a ${CMAKE_SOURCE_DIR}/test/axc-dump.out.gz -m ${CMAKE_SOURCE_DIR}/test/ooo-dump.out.gz
     )
+
+
+
+set(CMAKE_INSTALL_RPATH "${RUBY_PATH}/lib")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

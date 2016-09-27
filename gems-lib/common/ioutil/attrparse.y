@@ -121,7 +121,7 @@ extern  void fprintAttr( FILE *fp, attr_value_t attr );
 conffile      : confmapping
 {
   g_attr_map = *($1);
-  free( $1 )
+  free( $1 );
 }
 
 confmapping   : confmapping confpair

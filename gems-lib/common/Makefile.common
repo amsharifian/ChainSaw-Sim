@@ -98,7 +98,7 @@ LFLAGS :=
 CC_VERSION=3.4.4
 
 ifeq ($(HOST_TYPE),amd64-linux)
-  CC =  g++-4.8
+  CC =  g++
   #CC =  /usr/bin/g++
   OPT_FLAGS = -m64 -march=barcelona -fPIC -Wno-deprecated
   LDFLAGS += -ggdb -g3 -Wl,-R/s/gcc-3.4.4/lib64 

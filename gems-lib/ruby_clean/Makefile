@@ -95,12 +95,10 @@ SRC_GENERATED := $(notdir $(shell ls $(GENERATED_DIR)/*.C))
 # shared code (../common) need to differentiate between ruby and opal
 SPECIAL_FLAGS += -DIS_RUBY
 
-DEBUG:=0
 ifeq ($(DEBUG), 1)
 	DEBUG_FLAGS += -DRUBY_DEBUG=true -g
-	@echo "Building in Debug Mode"
 else
-	DEBUG_FLAGS +=-O3 -DRUBY_DEBUG=false 
+	DEBUG_FLAGS += -DRUBY_DEBUG=false 
 endif
 
 # Turn this ON to insert a layer of translation that will present
